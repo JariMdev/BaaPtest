@@ -19,8 +19,6 @@ body {
 
 #bubble-container {
     min-height: 300px;
-    height: 80%;
-    width: 80%;
     position: relative;
     border-color: red;
     border-width: thin;
@@ -28,11 +26,6 @@ body {
     background: black;
 }
 
-/*#myCanvas {
-    border: 1px solid red;
-    height: 300px;
-    width: 600px;
-}*/
 
 .bubble-item {
     border-color: blue;

@@ -1,47 +1,137 @@
-//"use strict";
-    var requestAnimationFrame = window.requestAnimationFrame ||
+var requestAnimationFrame = window.requestAnimationFrame ||
+window.mozRequestAnimationFrame ||
+window.webkitRequestAnimationFrame ||
+window.msRequestAnimationFrame;
+
+
+var ball = document.getElementById("bubble-1");
+var container = document.getElementById("bubble-container");
+
+var factor = (Math.random() * (0.20 - 0.05) + 0.05).toFixed(2);
+var timeOld, timeElapsed;
+
+var x = Math.round(Math.random() * container.offsetWidth);
+var y = Math.round(Math.random() * container.offsetHeight);
+var step = 1;
+
+var dx = step;
+var dy = step;
+var width = ball.offsetWidth;
+var height = ball.offsetHeight;
+var cH = container.offsetHeight;
+var cW = container.offsetWidth;
+
+function movement() {
+requestAnimationFrame(moveball);
+
+function changeSpeed() {
+factor = (Math.random() * (0.20 - 0.05) + 0.05).toFixed(2);
+}
+
+
+function checkBall() {
+if (x + width >= cW) {
+dx = -step;
+changeSpeed();
+}
+if (x <= 0) {
+dx = step;
+changeSpeed()
+}
+if (y + height >= cH) {
+dy = -step;
+changeSpeed()
+}
+if (y <= 0) { 
+dy = step;
+changeSpeed()
+}
+}
+
+
+function moveball(timestamp) {
+
+if (!timeOld) timeOld = timestamp;
+timeElapsed = timestamp - timeOld;
+timeOld = timestamp;
+
+x += dx * timeElapsed * factor;
+y += dy * timeElapsed * factor;
+
+ball.style.transform = "translate(" + x + "px, " + y + "px)";
+
+checkBall();
+
+requestAnimationFrame(moveball);
+}
+}
+requestAnimationFrame(movement);
+
+/*    
+
+
+
+var requestAnimationFrame = window.requestAnimationFrame ||
                                 window.mozRequestAnimationFrame ||
                                 window.webkitRequestAnimationFrame ||
                                 window.msRequestAnimationFrame;
 
-    var ball;
     var balls = [];
-    //var numBalls = 10;
+    var ball1 = document.getElementById("bubble-1")
+    balls.push(ball1)
+    var ball2 = document.getElementById("bubble-2")
+    balls.push(ball2)
+    var ball3 = document.getElementById("bubble-3")
+    balls.push(ball3)
+    var ball4 = document.getElementById("bubble-4")
+    balls.push(ball4)
+    var ball5 = document.getElementById("bubble-5")
+    balls.push(ball5)
+    var ball6 = document.getElementById("bubble-6")
+    balls.push(ball6)
+    var ball7 = document.getElementById("bubble-7")
+    balls.push(ball7)
+    var ball8 = document.getElementById("bubble-8")
+    balls.push(ball8)
+    var ball9 = document.getElementById("bubble-9")
+    balls.push(ball9)
+    var ball10 = document.getElementById("bubble-10")
+    balls.push(ball10)
 
     var container = document.getElementById("bubble-container");
-    // some factor to scale the speed of the ball
+
     var factor = (Math.random() * (1.00 - 0.25) + 0.25).toFixed(2);
     var timeOld, timeElapsed;
-    // the current x position of the ball
+
 
     var step = 1;
-    // the direction in the x dimension (1 or -1)
-    
-    var itemList = document.getElementsByClassName("bubble-item");
 
-    function display() {
-      for (var i = 0; i < itemList.length; i++){
-        ball = itemList[i];
-        ball.x = Math.round(Math.random() * container.offsetWidth);
-        ball.y = Math.round(Math.random() * container.offsetHeight);
-        ball.dx = step;
-        ball.dy = step;
-        ball.width = ball.offsetWidth;
-        ball.height = ball.offsetHeight;
-        ball.cH = container.offsetHeight;
-        ball.cW = container.offsetWidth;
-        balls.push(ball);
-      }
-    }
+    
 
     function movement() {
       requestAnimationFrame(moveball);
+
+      function display() {
+        for (var i = 0; i < balls.length; i++){
+          let ball = balls[i];
+          ball.x = Math.round(Math.random() * container.offsetWidth);
+          ball.y = Math.round(Math.random() * container.offsetHeight);
+          ball.dx = step;
+          ball.dy = step;
+          ball.width = ball.offsetWidth;
+          ball.height = ball.offsetHeight;
+          ball.cH = container.offsetHeight;
+          ball.cW = container.offsetWidth;
+        }
+      }
+
+      display();
   
       function changeSpeed() {
         factor = (Math.random() * (1.00 - 0.25) + 0.25).toFixed(2);
       }
 
-      // check the balls position and set the direction if out of bounds
+
       function checkBall() {
         if (x + width >= cW) {
           dx = -step;
@@ -61,15 +151,15 @@
         }
       }
  
-      // move the ball by (dx,dy)
+
       function moveball(timestamp) {
-        // measure the time elapsed since last call to moveball function
+
         if (!timeOld) timeOld = timestamp;
         timeElapsed = timestamp - timeOld;
         timeOld = timestamp;
 
   
-        // calculate ball's position based on movement's direction and time elapsed
+
         x += dx * timeElapsed * factor;
         y += dy * timeElapsed * factor;
   
@@ -78,16 +168,17 @@
   
         checkBall();
 
-        requestAnimationFrame(() => {
-          this.animateBubbles();
-        });
+        requestAnimationFrame(moveball);
       }
     }
+
     function animateBubbles() {
       for(var i = 0; i < balls.length; i++){
         let ball = this.balls[i];
-        ball.movement(i);
         ball.display();
+        ball.movement();
       }
     }
     requestAnimationFrame(animateBubbles);
+
+*/
